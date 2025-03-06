@@ -135,7 +135,6 @@ public class Game implements IGame {
             nextPlayer();
             return didPlayerWin();
         }
-
         nextPlayer();
         return didPlayerWin();
     }
