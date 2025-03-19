@@ -7,4 +7,12 @@ public class Titre {
     public Titre(String titre) {
         this.titre = titre;
     }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 }

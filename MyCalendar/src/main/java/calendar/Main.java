@@ -1,9 +1,11 @@
 package calendar;
 
-import calendar.user.MotDePasse;
-import calendar.user.Nom;
-import calendar.user.Utilisateur;
-import calendar.user.Utilisateurs;
+import calendar.Globale.Titre;
+import calendar.event.Attribut.*;
+import calendar.event.Type.Periodique;
+import calendar.event.Type.RdvPersonnel;
+import calendar.event.Type.Reunion;
+import calendar.user.*;
 
 import java.time.LocalDateTime;
 import java.time.temporal.WeekFields;
@@ -19,7 +21,7 @@ public class Main {
         //String motDePasse = null;
         boolean continuer = true;
 
-        Utilisateur utilisateur = null;
+        Membre utilisateur = null;
 
         Utilisateurs allUtilisateurs = new Utilisateurs();
 
@@ -52,13 +54,13 @@ public class Main {
                         System.out.print("Mot de passe: ");
                         MotDePasse motDePasse = new MotDePasse(scanner.nextLine());
 
-                        utilisateur = new Utilisateur(nomUtilisateur, motDePasse);
+                        utilisateur = new Membre(nomUtilisateur, motDePasse);
 
-                        for(Utilisateur user ; allUtilisateurs.getUtilisateur()){
+                        for (Membre user; allUtilisateurs.getUtilisateur()) {
                             Nom nomUtilisateurInscrit = user.getNom();
                             MotDePasse motdepasseUserInscrit = user.getMotdepasse();
 
-                            if(nomUtilisateur.equals(nomUtilisateurInscrit) && motDePasse.equals(motdepasseUserInscrit)){
+                            if (nomUtilisateur.equals(nomUtilisateurInscrit) && motDePasse.equals(motdepasseUserInscrit)) {
                                 utilisateur = user;
                             }
                         }
@@ -69,23 +71,6 @@ public class Main {
                             }
                         }
 
-                        //if (utilisateur.equals("Roger")) {
-                        //    if (!motDePasse.equals("Chat")) {
-                        //        utilisateur = null;
-                        //    }
-                        //} else {
-                        //    if (utilisateur.equals("Pierre")) {
-                        //        String motDePasse = scanner.nextLine();
-                        //        if (!motDePasse.equals("KiRouhl")) {
-                        //            utilisateur = null;
-                        //        }
-                        //    } else {
-                        //        System.out.print("Mot de passe: ");
-                        //        String motDePasse = scanner.nextLine();
-                        //
-                        //
-                        //    }
-                        //}
                         break;
 
                     case "2":
@@ -142,8 +127,8 @@ public class Main {
                                 System.out.print("Entrez le mois (1-12) : ");
                                 int mois = Integer.parseInt(scanner.nextLine());
 
-                                LocalDateTime debutMois = LocalDateTime.of(anneeMois, mois, 1, 0, 0);
-                                LocalDateTime finMois = debutMois.plusMonths(1).minusSeconds(1);
+                                DateEvenement debutMois = new DateEvenement(anneeMois, mois, 1, 0, 0);
+                                DateEvenement finMois = new DateEvenement()debutMois.plusMonths(1).minusSeconds(1);
 
                                 afficherListe(calendar.eventsDansPeriode(debutMois, finMois));
                                 break;
@@ -197,9 +182,14 @@ public class Main {
                         System.out.print("Durée (en minutes) : ");
                         int duree = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent("RDV_PERSONNEL", titre, utilisateur,
-                                LocalDateTime.of(annee, moisRdv, jourRdv, heure, minute), duree,
-                                "", "", 0);
+                        TitreEvenement titleRDV = new TitreEvenement(titre);
+                        Proprietaire proprietaireRDV = new Proprietaire(utilisateur);
+                        DateEvenement dateDebutRDV = new DateEvenement(annee, moisRdv, jourRdv, heure, minute);
+                        DureeMinutes dureeMinutesRDV = new DureeMinutes(duree);
+
+                        RdvPersonnel eventPersonnel = new RdvPersonnel(titleRDV, proprietaireRDV, dateDebutRDV, dureeMinutesRDV);
+
+                        calendar.ajouterEvent(eventPersonnel);
 
                         System.out.println("Événement ajouté.");
                         break;
@@ -223,18 +213,29 @@ public class Main {
                         System.out.println("Lieu :");
                         String lieu = scanner.nextLine();
 
-                        String participants = utilisateur;
+                        Participants participants = new Participants();
+
+                        participants.ajouterParticipant(utilisateur);
 
                         boolean encore = true;
                         System.out.println("Ajouter un participant ? (oui / non)");
                         while (scanner.nextLine().equals("oui")) {
                             System.out.print("Participants : " + participants);
-                            participants += ", " + scanner.nextLine();
+
+                            Nom nomParticipant = new Nom(scanner.nextLine());
+                            Participant newParticipant = new Participant(nomParticipant);
+                            participants.ajouterParticipant(newParticipant);
                         }
 
-                        calendar.ajouterEvent("REUNION", titre2, utilisateur,
-                                LocalDateTime.of(annee2, moisRdv2, jourRdv2, heure2, minute2), duree2,
-                                lieu, participants, 0);
+                        TitreEvenement titleReunion = new TitreEvenement(titre);
+                        Proprietaire proprietaireReunion = new Proprietaire(utilisateur);
+                        LocalDateTime dateDebutReunion = new LocalDateTime(annee, moisRdv, jourRdv, heure, minute);
+                        DureeMinutes dureeMinutesReunion = new DureeMinutes(duree);
+                        Lieu lieuReunion = new Lieu(lieu);
+
+                        Reunion eventReunion = new Reunion(titleReunion, proprietaireReunion, dateDebutReunion, dureeMinutesReunion, lieuReunion, participants);
+
+                        calendar.ajouterEvent(eventReunion);
 
                         System.out.println("Événement ajouté.");
                         break;
@@ -256,9 +257,12 @@ public class Main {
                         System.out.print("Frequence (en jours) : ");
                         int frequence = Integer.parseInt(scanner.nextLine());
 
-                        calendar.ajouterEvent("PERIODIQUE", titre3, utilisateur,
-                                LocalDateTime.of(annee3, moisRdv3, jourRdv3, heure3, minute3), 0,
-                                "", "", frequence);
+                        TitreEvenement titlePeriodique = new TitreEvenement(titre3);
+                        Proprietaire proprietairePeriodique = new Proprietaire(utilisateur);
+                        LocalDateTime dateDebutPeriodique = new LocalDateTime(annee3, moisRdv3, jourRdv3, heure3, minute3);
+                        Frequence frequencePeriodique = new Frequence(frequence);
+
+                        Periodique eventPeriodique = new Periodique(titlePeriodique, proprietairePeriodique, dateDebutPeriodique, dureeMinutesPeriodique, frequencePeriodique);
 
                         System.out.println("Événement ajouté.");
                         break;

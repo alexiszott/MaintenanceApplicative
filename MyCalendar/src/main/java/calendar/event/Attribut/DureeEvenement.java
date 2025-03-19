@@ -1,4 +1,4 @@
-package calendar.event;
+package calendar.event.Attribut;
 
 public class DureeEvenement {
 }

@@ -2,7 +2,7 @@ package calendar.user;
 
 public class MotDePasse {
 
-    String motdepasse
+    String motdepasse;
 
     public MotDePasse(String password) {
         this.motdepasse = password;

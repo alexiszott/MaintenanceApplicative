@@ -4,14 +4,17 @@ import java.util.List;
 
 public class Utilisateurs {
 
-    List<Utilisateur> utilisateur;
+    List<Utilisateur> utilisateurs;
 
     public List<Utilisateur> getUtilisateur() {
-        return utilisateur;
+        return utilisateurs;
     }
 
     public void setUtilisateur(List<Utilisateur> utilisateur) {
-        this.utilisateur = utilisateur;
+        this.utilisateurs = utilisateur;
     }
 
+    public void ajouterUtilisateur(Utilisateur utilisateur){
+        utilisateurs.add(utilisateur);
+    }
 }
