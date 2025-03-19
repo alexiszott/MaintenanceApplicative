@@ -1,4 +1,4 @@
-package calendar.event.Attribut;
+package calendar.event.attribut;
 
 public class Lieu {
 

@@ -1,7 +1,7 @@
 package calendar;
 
-import calendar.Globale.Titre;
-import calendar.event.Attribut.*;
+import calendar.gloable.Titre;
+import calendar.event.attribut.*;
 
 import java.time.LocalDateTime;
 

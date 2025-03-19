@@ -1,14 +1,11 @@
 package calendar.event;
 
 import calendar.Event;
-import calendar.event.Attribut.DateEvenement;
-import calendar.event.Type.Periodique;
-import calendar.event.Type.RdvPersonnel;
-import calendar.event.Type.Reunion;
+import calendar.event.attribut.DateEvenement;
+import calendar.event.type.Periodique;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Evenements {

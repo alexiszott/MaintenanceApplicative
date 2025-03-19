@@ -1,6 +1,6 @@
-package calendar.event.Attribut;
+package calendar.event.attribut;
 
-import calendar.Globale.Titre;
+import calendar.gloable.Titre;
 
 public class TitreEvenement extends Titre{
 

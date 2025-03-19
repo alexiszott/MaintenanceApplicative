@@ -1,4 +1,4 @@
-package calendar.Globale;
+package calendar.gloable;
 
 public class Titre {
 

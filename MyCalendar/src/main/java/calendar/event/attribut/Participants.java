@@ -1,4 +1,4 @@
-package calendar.event.Attribut;
+package calendar.event.attribut;
 
 import calendar.user.Utilisateur;
 import calendar.user.Utilisateurs;

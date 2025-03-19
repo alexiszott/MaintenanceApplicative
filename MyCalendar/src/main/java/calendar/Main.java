@@ -1,10 +1,9 @@
 package calendar;
 
-import calendar.Globale.Titre;
-import calendar.event.Attribut.*;
-import calendar.event.Type.Periodique;
-import calendar.event.Type.RdvPersonnel;
-import calendar.event.Type.Reunion;
+import calendar.event.attribut.*;
+import calendar.event.type.Periodique;
+import calendar.event.type.RdvPersonnel;
+import calendar.event.type.Reunion;
 import calendar.user.*;
 
 import java.time.LocalDateTime;
@@ -17,8 +16,6 @@ public class Main {
     public static void main(String[] args) {
         CalendarManager calendar = new CalendarManager();
         Scanner scanner = new Scanner(System.in);
-        //String utilisateur = null;
-        //String motDePasse = null;
         boolean continuer = true;
 
         Membre utilisateur = null;
@@ -42,10 +39,11 @@ public class Main {
                 System.out.println(
                         "                                                                                  |___/");
 
+
                 System.out.println("1 - Se connecter");
                 System.out.println("2 - Créer un compte");
                 System.out.println("Choix : ");
-
+g
                 switch (scanner.nextLine()) {
                     case "1":
                         System.out.print("Nom d'utilisateur: ");
@@ -127,8 +125,8 @@ public class Main {
                                 System.out.print("Entrez le mois (1-12) : ");
                                 int mois = Integer.parseInt(scanner.nextLine());
 
-                                DateEvenement debutMois = new DateEvenement(anneeMois, mois, 1, 0, 0);
-                                DateEvenement finMois = new DateEvenement()debutMois.plusMonths(1).minusSeconds(1);
+                                LocalDateTime debutMois = new LocalDateTime(anneeMois, mois, 1, 0, 0);
+                                LocalDateTime finMois = new LocalDateTime()debutMois.plusMonths(1).minusSeconds(1);
 
                                 afficherListe(calendar.eventsDansPeriode(debutMois, finMois));
                                 break;
@@ -217,7 +215,6 @@ public class Main {
 
                         participants.ajouterParticipant(utilisateur);
 
-                        boolean encore = true;
                         System.out.println("Ajouter un participant ? (oui / non)");
                         while (scanner.nextLine().equals("oui")) {
                             System.out.print("Participants : " + participants);

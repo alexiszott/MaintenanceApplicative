@@ -1,7 +1,7 @@
-package calendar.event.Type;
+package calendar.event.type;
 
 import calendar.Event;
-import calendar.event.Attribut.*;
+import calendar.event.attribut.*;
 
 import java.time.LocalDateTime;
 

@@ -1,16 +1,9 @@
 package calendar;
 
-import calendar.Globale.Titre;
-import calendar.event.Attribut.DateEvenement;
-import calendar.event.Attribut.DureeMinutes;
-import calendar.event.Attribut.Proprietaire;
+import calendar.event.attribut.DateEvenement;
 import calendar.event.Evenements;
-import calendar.event.Type.RdvPersonnel;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
 
 public class CalendarManager {
 
