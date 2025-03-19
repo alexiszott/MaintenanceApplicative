@@ -39,7 +39,6 @@ public class Main {
                 System.out.println(
                         "                                                                                  |___/");
 
-
                 System.out.println("1 - Se connecter");
                 System.out.println("2 - Créer un compte");
                 System.out.println("Choix : ");
