@@ -2,6 +2,7 @@ package calendar.event.type;
 
 import calendar.Event;
 import calendar.event.attribut.*;
+import calendar.gloable.EventID;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +11,7 @@ public class Periodique extends Event {
     Frequence frequenceJours;
 
     public Periodique(TitreEvenement title, Proprietaire proprietaire, LocalDateTime dateDebut, DureeMinutes dureeMinutes, Frequence frequenceJours) {
-        super(title, proprietaire, dateDebut, dureeMinutes);
+        super(title, proprietaire, dateDebut, dureeMinutes, new EventID());
         this.frequenceJours = frequenceJours;
     }
 
@@ -18,12 +19,8 @@ public class Periodique extends Event {
         return frequenceJours.getFrequence();
     }
 
-    public void setFrequenceJours(Frequence frequenceJours) {
-        this.frequenceJours = frequenceJours;
-    }
-
     @Override
     public String description() {
-        return "Événement périodique : " + title.getTitre() + " tous les " + frequenceJours.getFrequence() + " jours";
+        return "Événement périodique : " + title.getTitre() + " tous les " + frequenceJours.getFrequence() + " jours ("+ eventId.getId() +")";
     }
 }

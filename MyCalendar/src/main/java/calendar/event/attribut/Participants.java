@@ -1,24 +1,30 @@
 package calendar.event.attribut;
 
+import calendar.user.Membre;
+import calendar.user.Membres;
 import calendar.user.Utilisateur;
 import calendar.user.Utilisateurs;
 
 public class Participants {
 
-    Utilisateurs participants;
+    Membres participants;
 
-    public void ajouterParticipant(Utilisateur participant) {
-        participants.ajouterUtilisateur(participant);
+    public Participants() {
+        this.participants = new Membres();
+    }
+
+    public void ajouterParticipant(Membre participant) {
+        participants.ajouterMembre(participant);
     }
 
     @Override
     public String toString() {
         StringBuilder res = new StringBuilder();
-        for (Utilisateur user : participants.getUtilisateur()) {
+        for (Membre user : participants.getMembres()) {
             if (res.length() > 0) {
                 res.append(" ");
             }
-            res.append(user.getNom());
+            res.append(user.getNom().getNom());
         }
         return res.toString();
     }

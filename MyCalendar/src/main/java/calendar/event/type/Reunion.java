@@ -2,6 +2,7 @@ package calendar.event.type;
 
 import calendar.Event;
 import calendar.event.attribut.*;
+import calendar.gloable.EventID;
 
 import java.time.LocalDateTime;
 
@@ -11,7 +12,7 @@ public class Reunion extends Event {
     Participants participants;
 
     public Reunion(TitreEvenement title, Proprietaire proprietaire, LocalDateTime dateDebut, DureeMinutes dureeMinutes, Lieu lieu, Participants participants) {
-        super(title, proprietaire, dateDebut, dureeMinutes);
+        super(title, proprietaire, dateDebut, dureeMinutes, new EventID());
 
         this.lieu = lieu;
         this.participants = participants;
@@ -20,7 +21,7 @@ public class Reunion extends Event {
     @Override
     public String description() {
 
-        return "Réunion : " + title.getTitre() + " à " + lieu.getLieu() + " avec " + participants.toString();
+        return "Réunion : " + title.getTitre() + " à " + lieu.getLieu() + " avec " + participants.toString() + " (" + eventId.getId() + ")";
     }
 
 }

@@ -1,20 +1,14 @@
 package calendar.user;
 
-public class Membre extends Utilisateur{
+public class Membre {
 
     Nom nom;
-    MotDePasse motdepasse;
 
-    public Membre(Nom name, MotDePasse password) {
-        super(name);
-        this.motdepasse = password;
+    public Membre(Nom name) {
+        this.nom = name;
     }
 
     public Nom getNom() {
         return nom;
-    }
-
-    public MotDePasse getMotdepasse() {
-        return motdepasse;
     }
 }
