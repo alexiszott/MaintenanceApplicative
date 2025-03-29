@@ -15,6 +15,6 @@ public class RdvPersonnel extends Event {
     @Override
     public String description() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
-        return "RDV : " + title + " à " + dateDebut.format(formatter) + " (" + eventId.getId()+ ")";
+        return "RDV : " + title + " à " + dateDebut.format(formatter) + " (" + eventId.getId() + ")";
     }
 }

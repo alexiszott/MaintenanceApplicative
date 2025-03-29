@@ -22,7 +22,13 @@ public class Evenements {
 
     public void supprimerEvenements(EventID id) {
         try {
-            evenements.remove(id.getId());
+            for (Event e : evenements) {
+                if (e.eventId.getId() == id.getId()) {
+                    evenements.remove(e);
+                    System.out.println("L'évènement " + e.title + " a été supprimer.");
+                    break;
+                }
+            }
         } catch (Exception e) {
             System.err.println("Erreur lors de la suppression de l'événement : " + e.getMessage());
         }
@@ -31,7 +37,7 @@ public class Evenements {
     public void addEvent(Event event) {
         for (Event e : evenements) {
             if (conflit(event, e)) {
-                System.out.println("Conflit détecté entre " + event + " et " + e);
+                System.out.println("Conflit détecté entre " + event.title + " et " + e.title);
                 return;
             }
         }

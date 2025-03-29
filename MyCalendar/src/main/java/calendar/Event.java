@@ -22,5 +22,45 @@ public abstract class Event {
         this.eventId = id;
     }
 
+    public EventID getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(EventID eventId) {
+        this.eventId = eventId;
+    }
+
+    public Titre getTitle() {
+        return title;
+    }
+
+    public void setTitle(Titre title) {
+        this.title = title;
+    }
+
+    public Proprietaire getProprietaire() {
+        return proprietaire;
+    }
+
+    public void setProprietaire(Proprietaire proprietaire) {
+        this.proprietaire = proprietaire;
+    }
+
+    public LocalDateTime getDateDebut() {
+        return dateDebut;
+    }
+
+    public void setDateDebut(LocalDateTime dateDebut) {
+        this.dateDebut = dateDebut;
+    }
+
+    public DureeMinutes getDureeMinutes() {
+        return dureeMinutes;
+    }
+
+    public void setDureeMinutes(DureeMinutes dureeMinutes) {
+        this.dureeMinutes = dureeMinutes;
+    }
+
     public abstract String description();
 }

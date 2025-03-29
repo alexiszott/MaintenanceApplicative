@@ -1,66 +1,63 @@
+package calendar;
 
-package trivia;
+import static org.junit.jupiter.api.Assertions.*;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.Random;
-
-import jdk.jfr.Enabled;
-import org.junit.jupiter.api.Disabled;
+import calendar.event.Evenements;
+import calendar.event.attribut.DureeMinutes;
+import calendar.event.attribut.Proprietaire;
+import calendar.event.attribut.TitreEvenement;
+import calendar.event.type.RdvPersonnel;
+import calendar.gloable.EventID;
+import calendar.user.MotDePasse;
+import calendar.user.Nom;
+import calendar.user.Utilisateur;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDateTime;
 
-public class GameTest {
-	@Test
-	@Disabled
-	public void caracterizationTest() {
-		for (int seed = 1; seed < 10_000; seed++) {
-			testSeed(seed, false);
-		}
-	}
+class CalendarManagerTest {
+    private Evenements calendrier;
+    private Event evenement;
 
-	private void testSeed(int seed, boolean printExpected) {
-		String expectedOutput = extractOutput(new Random(seed), new GameOld());
-		if (printExpected) {
-			System.out.println(expectedOutput);
-		}
-		String actualOutput = extractOutput(new Random(seed), new Game());
-		assertEquals(expectedOutput, actualOutput);
-	}
+    @BeforeEach
+    void setUp() {
+        Utilisateur utilisateur = new Utilisateur(new Nom("Alexis"), new MotDePasse("123"));
+        calendrier = new Evenements();
+        evenement = new RdvPersonnel(
+                new TitreEvenement("Dentiste"),
+                new Proprietaire(utilisateur),
+                LocalDateTime.of(2025, 4, 1, 10, 0),
+                new DureeMinutes(60)
+        );
+    }
 
-	@Test
-	public void oneSeed() {
-		testSeed(1, true);
-	}
+    @Test
+    void testCreationEvenement() {
+        assertNotNull(evenement);
+        assertEquals("Dentiste", evenement.getTitle().getTitre());
+        assertEquals(60, evenement.getDureeMinutes().getDuree());
+    }
 
-	private String extractOutput(Random rand, IGame aGame) {
-		PrintStream old = System.out;
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		try (PrintStream inmemory = new PrintStream(baos)) {
-			// WARNING: System.out.println() doesn't work in this try {} as the sysout is captured and recorded in memory.
-			System.setOut(inmemory);
 
-			aGame.add("Chet");
-			aGame.add("Pat");
-			aGame.add("Sue");
+    @Test
+    void testEvenementsEstVideInitialement() {
+        assertTrue(calendrier.isEmpty());
+    }
 
-			boolean notAWinner = false;
-			do {
-				aGame.roll(rand.nextInt(5) + 1);
+    @Test
+    void testSuppressionEvenementExistant() {
+        calendrier.addEvent(evenement);
+        assertFalse(calendrier.isEmpty());
+        EventID id = calendrier.getEvenements().get(0).getEventId();
+        calendrier.supprimerEvenements(id);
+        assertTrue(calendrier.isEmpty());
+    }
 
-				if (rand.nextInt(9) == 7) {
-					notAWinner = aGame.wrongAnswer();
-				} else {
-					notAWinner = aGame.handleCorrectAnswer();
-				}
-
-			} while (notAWinner);
-		} finally {
-			System.setOut(old);
-		}
-
-		return new String(baos.toByteArray());
-	}
+    @Test
+    void testSuppressionEvenementInexistant() {
+        calendrier.addEvent(evenement);
+        calendrier.supprimerEvenements(new EventID());
+        assertFalse(calendrier.isEmpty());
+    }
 }
